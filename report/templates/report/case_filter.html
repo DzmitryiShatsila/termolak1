@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Filters</title> {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-9 border border-primary rounded" style="padding-left: 0">
+        {% if filter.qs %}
+        <table class="table table-bordered">
+            <thead>
+                <th scope="col">Date</th>
+                <th scope="col">Casecode</th>
+                <th scope="col">Images</th>
+                <th scope="col">Case</th>
+                <th scope="col">Product</th>
+                <th scope="col">Software</th>
+                <th scope="col">Procedure</th>
+                <th scope="col">Time</th>
+            </thead>
+            <tbody>
+                {% for case in filter.qs %}
+                    <tr>
+                        <td>{{ case.date }}</td>
+                        <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
+                        <td>{{ case.get_images_display }}</td>
+                        <td>{{ case.get_case_display }}</td>
+                        <td>{{ case.get_product_display }}</td>
+                        <td>{{ case.get_software_display }}</td>
+                        <td>{{ case.get_procedure_display }}</td>
+                        <td>{{ case.time }}</td>
+                        <td><a href="{% url 'report:case-delete' case.id %}">del</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            There are no cases
+        {% endif %}
+    </div>
+
+    <div class="col-sm-3 border border-primary rounded" style="padding-top: 10px">
+        <form method="get">
+            {{ filter.form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Filter">
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

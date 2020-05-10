@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>All employees</title> {% endblock %}
+{% block content %}
+    {% for user in users %}
+        <p><a href="{% url 'employee:employee-detail' user.username %}">{{ user.get_full_name }}</a></p>
+    {% empty %}
+        There are no employees :(
+    {% endfor %}
+    <p><a class="btn btn-primary" href="{% url 'employee:employee-create' %}">Add new</a></p>
+{% endblock %}

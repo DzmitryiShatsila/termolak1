@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="post" class="form-inline">
+        {% csrf_token %}
+        {{form.date}}
+        <input type="text" name="case_code" maxlength="200" required id="id_case_code" placeholder="casecode" style="min-width: 270px">
+        <select name="images" id="id_images" style="min-width: 95px">
+            <option value="ct" selected="">CT</option>
+            <option value="mri">MRI</option>
+        </select>
+        <select name="case" id="id_case" style="min-width: 145px">
+            <option value="s" selected="">Standard</option>
+            <option value="o">MyOsteotomy</option>
+        </select>
+        <select name="product" required="" id="id_product" style="min-width: 100px">
+            <option value="" selected="">---------</option>
+            <option value="spine">Spine</option>
+            <option value="knee">Knee</option>
+            <option value="hip">Hip</option>
+            <option value="shoulder">Shoulder</option>
+            <option value="forearm">Forearm</option>
+            <option value="wrist">Wrist</option>
+            <option value="ankle">Ankle</option>
+        </select>
+        <select name="software" required="" id="id_software" style="min-width: 105px">
+            <option value="" selected="">---------</option>
+            <option value="mimics">Mimics</option>
+            <option value="avizo">Avizo</option>
+        </select>
+        <select name="procedure" required="" id="id_procedure" style="min-width: 150px">
+            <option value="" selected="">---------</option>
+            <option value="rec">Reconstruction</option>
+            <option value="check">Control</option>
+        </select>
+        <input type="number" name="time" required="" id="id_time" style="max-width: 60px">
+<!--        {{ form.notes }}-->
+        <input class="btn btn-primary" type="submit" value="Add" style="margin-left: 10px">
+    </form>
+
+    {% if object_list %}
+        <table class="table table-bordered">
+            <thead>
+<!--                <th scope="col">Author</th>-->
+                <th scope="col">Date</th>
+                <th scope="col">Casecode</th>
+                <th scope="col">Images</th>
+                <th scope="col">Case</th>
+                <th scope="col">Product</th>
+                <th scope="col">Software</th>
+                <th scope="col">Procedure</th>
+                <th scope="col">Time</th>
+<!--                <th scope="col">Notes</th>-->
+            </thead>
+            <tbody>
+                {% for case in object_list %}
+                    <tr>
+<!--                        <td>{{ case.author.first_name }}</td>-->
+                        <td>{{ case.date }}</td>
+                        <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
+                        <td>{{ case.get_images_display }}</td>
+                        <td>{{ case.get_case_display }}</td>
+                        <td>{{ case.get_product_display }}</td>
+                        <td>{{ case.get_software_display }}</td>
+                        <td>{{ case.get_procedure_display }}</td>
+                        <td>{{ case.time }}</td>
+<!--                        <td>{{ case.notes }}</td>-->
+                        <td><a href="{% url 'report:case-delete' case.id %}">del</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        There are no cases
+    {% endif %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+            </li >
+            {% endif %}
+            <li class="page-item">
+                <p class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

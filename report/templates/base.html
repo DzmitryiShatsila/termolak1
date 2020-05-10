@@ -1,0 +1,100 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    {% block title %} <title>Termolak1</title> {% endblock %}
+</head>
+<header>
+    {% if user.is_authenticated %}
+    <div>
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active border border-dark" href="{% url 'report:all-cases' %}">My cases</a>
+            </li>
+            <li class="nav-item">
+                <form class="nav-link active border border-dark" style="padding: 5px 0" action="{% url 'report:search-results' %}" method="get">
+                    <input name="q" placeholder="Search" type="text">
+                </form>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active border border-dark" href="{% url 'report:case-filter' %}">Filter</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active border border-dark" href="https://myknee.medacta.com/" target="_blank">Medacta.com</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active border border-dark" href="https://docs.google.com/spreadsheets/d/1KSSCoOfDqnUT5T825Ud1rVrEKgcGk0BV775E6elHYYU/edit#gid=0" target="_blank">Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active border border-dark" href="{% url 'report:sent-report' %}">Send email</a>
+            </li>
+
+            <li class="nav-item">
+                    <a class="nav-link active border border-dark" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+            </li>
+            </ul>
+    </div>
+    {% endif %}
+</header>
+<body class="bg-light">
+    <div class="container-flex" style="margin:20px 15px 20px 0;">
+        <div class="row">
+            <div class="col-sm-2" >
+                {% block sidebar %}
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li>User: {{user.get_username}}</li>
+                        <li><a href="{% url 'employee:profile-view' %}">Profile</a></li>
+
+                    {% endif %}
+                    <br>
+                    {% if perms.is_manager %}
+                    <li><a href="{% url 'report:task' %}">TASKS</a></li>
+                    <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>
+
+                    {% endif %}
+                </ul>
+                {% endblock %}
+            </div>
+            <div class="col-sm-10">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+<!--   {% block pagination %}-->
+<!--    <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination justify-content-center">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page=1">&laquo;</a>-->
+<!--            </li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>-->
+<!--            </li >-->
+<!--            {% endif %}-->
+<!--            <li class="page-item">-->
+<!--                <p class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>-->
+<!--            </li>-->
+<!--            {% if page_obj.has_next %}-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>-->
+<!--            </li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>-->
+<!--            </li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--    {% endblock %}-->
+
+</body>
+</html>

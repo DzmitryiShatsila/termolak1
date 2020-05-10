@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>Detail</title> {% endblock %}
+{% block content %}
+    <div class="container-flex">
+        <div class="row">
+            <div class="col-sm-6">
+                <p>Name: {{ employee.get_full_name }}</p>
+                <p>Hired: {{ employee.profile.hired }}</p>
+                <p><a class="btn btn-primary" href="{% url 'employee:employee-delete' employee.username %}">Delete</a></p>
+            </div>
+            <div class="col-sm-6">
+                <p>Average time</p>
+                <ul>Reconstruction:
+                    <li>MyKnee: {{ ct_knee_rec }}</li>
+                    <li>MyKnee(MRI): {{ mri_knee_rec }}</li>
+                    <li>MyHip: {{ ct_hip_rec }}</li>
+                    <li>MyShoulder: {{ ct_shoulder_rec }}</li>
+                    <li>MySpine: {{ ct_spine_rec }}</li>
+                    <li>MyOsteo: {{ osteo }}</li>
+                </ul>
+                <ul>Check:
+                    <li>MyKnee: {{ ct_knee_check }}</li>
+                    <li>MyHip: {{ ct_hip_check }}</li>
+                    <li>MyShoulder: {{ ct_shoulder_check }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>Report:
+            {% if cases %}
+            <table class="table table-bordered">
+                <thead>
+                    <th scope="col">Author</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Casecode</th>
+                    <th scope="col">Images</th>
+                    <th scope="col">Case</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Software</th>
+                    <th scope="col">Procedure</th>
+                    <th scope="col">Time</th>
+<!--                <th scope="col">Notes</th>-->
+                </thead>
+                <tbody>
+                {% for case in cases %}
+                <tr>
+                    <td>{{ case.author.first_name }}</td>
+                    <td>{{ case.date }}</td>
+                    <td>{{ case.case_code }}</td>
+                    <td>{{ case.get_images_display }}</td>
+                    <td>{{ case.get_case_display }}</td>
+                    <td>{{ case.get_product_display }}</td>
+                    <td>{{ case.get_software_display }}</td>
+                    <td>{{ case.get_procedure_display }}</td>
+                    <td>{{ case.time }}</td>
+<!--             <td>{{ case.notes }}</td>-->
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                There are no cases
+            {% endif %}
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

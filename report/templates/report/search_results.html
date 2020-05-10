@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} <title>Search results</title> {% endblock %}
+
+{% block content %}
+{% if cases %}
+<table class="table table-bordered">
+    <thead>
+        <th scope="col">Author</th>
+        <th scope="col">Date</th>
+        <th scope="col">Casecode</th>
+        <th scope="col">Images</th>
+        <th scope="col">Case</th>
+        <th scope="col">Product</th>
+        <th scope="col">Software</th>
+        <th scope="col">Procedure</th>
+        <th scope="col">Time</th>
+<!--               <th scope="col">Notes</th>-->
+    </thead>
+        <tbody>
+        {% for case in cases %}
+            <tr>
+                <td>{{ case.author.first_name }}</td>
+                <td>{{ case.date }}</td>
+                <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
+                <td>{{ case.get_images_display }}</td>
+                <td>{{ case.get_case_display }}</td>
+                <td>{{ case.get_product_display }}</td>
+                <td>{{ case.get_software_display }}</td>
+                <td>{{ case.get_procedure_display }}</td>
+                <td>{{ case.time }}</td>
+<!--                <td>{{ case.notes }}</td>-->
+                <td><a href="{% url 'report:case-delete' case.id %}">del</a></td>
+            </tr>
+        {% endfor %}
+</table>
+{% else %}
+Nothings found :(
+{% endif %}
+
+{% endblock %}

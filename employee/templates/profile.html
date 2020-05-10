@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>Profile {{ user.last_name }}</title> {% endblock %}
+{% block content %}
+    <p>{{ user.get_full_name }}</p>
+    <p>Name: {{ user.first_name }}</p>
+    <p>Surname: {{ user.last_name }}</p>
+    <p>Login: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p><a href="{% url 'employee:profile-update' %}">Edit</a></p>
+    <p><a href="{% url 'employee:change-pass' %}">Change password</a></p>
+{% endblock %}

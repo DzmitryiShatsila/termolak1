@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if sent %}
+        <h2>Report was successfully send via email.</h2>
+    {% else %}
+        <h1>Today's report</h1>
+
+        {% if cases %}
+            <p>Reconstruction: {% if ct_knee %}{{ ct_knee.count }} ct-knee(mimics),{% endif %}
+                                {% if ct_hip %}{{ ct_hip.count }} ct-hip(mimics),{% endif %}
+                                {% if ct_shoulder %}{{ ct_shoulder.count }} ct-shoulder(mimics),{% endif %}
+                                {% if ct_spine %}{{ ct_spine.count }} ct-spine(mimics),{% endif %}
+                                {% if mri_knee %}{{ mri_knee.count }} mri-knee(mimics),{% endif %}
+                                {% if ct_knee_avizo %}{{ ct_knee_avizo.count }} ct-knee(avizo),{% endif %}
+            </p>
+            <p>Check: {% if ct_knee_check %}{{ ct_knee_check.count }} ct-knee(mimics), {% endif %}
+                {% if ct_hip_check %}{{ ct_hip_check.count }} ct-hip(mimics), {% endif %}
+                {% if ct_shoulder_check %}{{ ct_shoulder_check.count }} ct-shoulder(mimics),{% endif %}
+            </p>
+             <p>Extra: {% if osteotomy %}{{ osteotomy.count }} osteotomy(mimics){% endif %}</p>
+        {% else %}
+        You didn't made any cases today :(
+        {% endif %}
+        <form action="." method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Send">
+        </form>
+    {% endif %}
+{% endblock %}

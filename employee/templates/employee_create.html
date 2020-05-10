@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>New employee</title> {% endblock %}
+{% block content %}
+    <form action="." method="post">
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
