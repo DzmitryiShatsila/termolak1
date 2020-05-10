@@ -2,8 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 import uuid
+from django.core.exceptions import ValidationError
 
 # Create your models here.
+
+
+def validate_time(value):
+    if value <= 0:
+        raise ValidationError('Time cannot be less then 0!')
 
 
 class Cases(models.Model):
@@ -32,7 +38,7 @@ class Cases(models.Model):
     procedure_type = (('rec', 'Reconstruction'),
                       ('check', 'Control'))
     procedure = models.CharField(max_length=10, choices=procedure_type)
-    time = models.IntegerField()
+    time = models.IntegerField(validators=[validate_time])
     notes = models.CharField(max_length=200, blank=True)
 
     class Meta:
