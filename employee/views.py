@@ -30,10 +30,7 @@ def profile_update(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return render(request,
-                          'profile.html',
-                          {'user_form': user_form,
-                           'profile_form': profile_form})
+            return redirect(reverse('employee:profile-view'))
     else:
         user_form = forms.UserUpdateForm(instance=request.user)
         profile_form = forms.ProfileUpdateForm(instance=request.user.profile)
@@ -61,7 +58,7 @@ def change_password(request):
 
 
 @login_required
-@permission_required('is_manager')
+@permission_required('')
 def crate_employee(request):
     if request.method == 'POST':
         user_form = forms.UserCreateForm(request.POST)
@@ -81,7 +78,7 @@ def crate_employee(request):
 
 
 @login_required
-@permission_required('is_manager')
+@permission_required('')
 def delete_employee(request, username):
     employee = User.objects.get(username=username)
     if request.method == 'POST':
@@ -92,15 +89,15 @@ def delete_employee(request, username):
                   {'employee': employee})
 
 
-class AllEmployees(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
-    permission_required = 'is_manager'
+class AllEmployees(PermissionRequiredMixin, LoginRequiredMixin, generic.ListView):
+    permission_required = ''
     model = User
     template_name = 'all_employees.html'
     context_object_name = 'users'
 
 
 class EmployeeDetail(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
-    permission_required = 'is_manager'
+    permission_required = ''
     model = User
     slug_field = 'username'
     template_name = 'employee_detail.html'

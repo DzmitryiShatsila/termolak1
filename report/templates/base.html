@@ -54,7 +54,7 @@
 
                     {% endif %}
                     <br>
-                    {% if perms.is_manager %}
+                    {% if user.is_superuser %}
                     <li><a href="{% url 'report:task' %}">TASKS</a></li>
                     <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>
 

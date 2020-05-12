@@ -43,7 +43,6 @@ class Cases(models.Model):
 
     class Meta:
         ordering = ['-date']
-        permissions = (("is_manager", "Can see all things"),)
 
     @staticmethod
     def get_detail(images, case, product, software, procedure):

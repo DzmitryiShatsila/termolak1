@@ -5,9 +5,11 @@ from django.conf import settings
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     hired = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        permissions = (("is_manager", "Can see all things"),)
