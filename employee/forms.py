@@ -22,7 +22,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('hired',)
-        widgets = {'hired': forms.SelectDateWidget}
 
 
 class UserDeleteForm(forms.Form):
