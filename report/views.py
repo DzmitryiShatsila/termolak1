@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse, reverse_lazy
 from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from .filters import CasesFilter
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 # Create your views here.
 
@@ -85,11 +86,21 @@ def sent_email(request):
         form = forms.EmailMForm(request.POST)
 
         if form.is_valid():
+            sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
             cd = form.cleaned_data
-            body = cd['text']
+            from_email = Email(request.user.email)
             subject = cd['subject']
-            email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
-            email.send()
+            to_email = cd['to_email']
+            content = cd['text']
+            mail = Mail(from_email, subject, to_email, content)
+            response = sg.client.mail.send.post(request_body=mail.get())
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            # body = cd['text']
+            # subject = cd['subject']
+            # email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+            # email.send()
             sent = True
     else:
         form = forms.EmailMForm()
