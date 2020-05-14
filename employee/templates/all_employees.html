@@ -3,7 +3,7 @@
 {% block title %} <title>All employees</title> {% endblock %}
 {% block content %}
     {% for user in users %}
-        <p><a href="{% url 'employee:employee-detail' user.username %}">{{ user.get_full_name }}</a></p>
+        <p><a href="{% url 'employee:employee-detail' user.username %}">{{ user.username}}: {{ user.get_full_name }}</a></p>
     {% empty %}
         There are no employees :(
     {% endfor %}

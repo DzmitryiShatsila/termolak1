@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>Delete case</h1>
-    <p>Are yoy sure you want to delete {{case.case_code}}?</p>
+    <p>Are you sure you want to delete {{case.case_code}}?</p>
     <form action="." method="post">
         {{ form.as_p }}
         {% csrf_token %}

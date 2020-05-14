@@ -1,5 +1,6 @@
 from django import forms
 from . import models
+from django.utils import timezone, dateformat
 
 
 class CasesForm(forms.ModelForm):
@@ -11,4 +12,6 @@ class CasesForm(forms.ModelForm):
 
 
 class EmailMForm(forms.Form):
+    to_email = forms.EmailField(initial='root@google.com')
+    subject = forms.CharField(initial=dateformat.format(timezone.now().date(), 'd M Y'))
     text = forms.CharField(required=False, widget=forms.Textarea)

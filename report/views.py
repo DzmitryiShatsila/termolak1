@@ -86,22 +86,9 @@ def sent_email(request):
 
         if form.is_valid():
             cd = form.cleaned_data
-            comment = cd['text']
-            subject = '{}'.format(timezone.now())
-            body = render_to_string('report/email.html',
-                                    {'cases': cases,
-                                     'ct_knee': ct_knee,
-                                     'ct_knee_avizo': ct_knee_avizo,
-                                     'ct_hip': ct_hip,
-                                     'ct_shoulder': ct_shoulder,
-                                     'ct_spine': ct_spine,
-                                     'mri_knee': mri_knee,
-                                     'ct_knee_check': ct_knee_check,
-                                     'ct_hip_check': ct_hip_check,
-                                     'ct_shoulder_check': ct_shoulder_check,
-                                     'osteotomy': osteotomy,})
-            body = strip_tags(body)
-            email = EmailMessage(subject, body + comment, request.user.email, ['root@google.com'])
+            body = cd['text']
+            subject = cd['subject']
+            email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
             email.send()
             sent = True
     else:
