@@ -10,9 +10,7 @@ from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
-import sendgrid
-import os
-from sendgrid.helpers.mail import *
+
 
 # Create your views here.
 
