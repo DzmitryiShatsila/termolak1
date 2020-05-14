@@ -90,14 +90,6 @@ def sent_email(request):
             email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
             email.send()
             sent = True
-            return request.post(
-                'https://api.mailgun.net/v3/sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org',
-                auth=('api', '0c3f745014cd6d362ac8af133916042b-3e51f8d2-0de22ca2'),
-                data={"from": "Excited User <mailgun@YOUR_DOMAIN_NAME>",
-                      "to": ["shatilo124@.com", "YOU@YOUR_DOMAIN_NAME"],
-                      "subject": "Hello",
-                      "text": "Testing some Mailgun awesomness!"}
-            )
     else:
         form = forms.EmailMForm()
     return render(request,
