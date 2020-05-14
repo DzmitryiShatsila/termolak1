@@ -86,21 +86,11 @@ def sent_email(request):
         form = forms.EmailMForm(request.POST)
 
         if form.is_valid():
-            sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
             cd = form.cleaned_data
-            from_email = Email(request.user.email)
+            body = cd['text']
             subject = cd['subject']
-            to_email = cd['to_email']
-            content = cd['text']
-            mail = Mail(from_email, subject, to_email, content)
-            response = sg.client.mail.send.post(request_body=mail.get())
-            print(response.status_code)
-            print(response.body)
-            print(response.headers)
-            # body = cd['text']
-            # subject = cd['subject']
-            # email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
-            # email.send()
+            email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+            email.send()
             sent = True
     else:
         form = forms.EmailMForm()
