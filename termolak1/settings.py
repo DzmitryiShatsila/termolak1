@@ -23,9 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-SECRET_KEY = 't1%rl5np*s67u^aepnmg@y&02^tj9r1#@uzqdd7!o*kk)wdyz%'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['termolak1.herokuapp.com', '127.0.0.1']
@@ -129,10 +128,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org'
-EMAIL_HOST_PASSWORD = '0a124790b7f43febe58847e046194d0f-3e51f8d2-03ef1e78'
+EMAIL_HOST_USER = 'ssm018.dzmitryi@gmail.com'
+EMAIL_HOST_PASSWORD = 'Arve2018'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
