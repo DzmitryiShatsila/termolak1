@@ -10,6 +10,8 @@ from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
+# import requests
+
 
 
 # Create your views here.
@@ -87,8 +89,16 @@ def sent_email(request):
             cd = form.cleaned_data
             body = cd['text']
             subject = cd['subject']
-            email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+            # email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+            email = EmailMessage(subject, body, request.user.email, ['rosas30398@beiop.com'])
             email.send()
+            # return requests.post(
+            #     "https://api.mailgun.net/v3/sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org/messages",
+            #     auth=("api", "0c3f745014cd6d362ac8af133916042b-3e51f8d2-0de22ca2"),
+            #     data={"from": "Excited User <mailgun@YOUR_DOMAIN_NAME>",
+            #           "to": ["rosas30398@beiop.com", "YOU@YOUR_DOMAIN_NAME"],
+            #           "subject": "Hello",
+            #           "text": "Testing some Mailgun awesomness!"})
             sent = True
     else:
         form = forms.EmailMForm()
