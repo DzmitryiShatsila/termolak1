@@ -109,8 +109,7 @@ def sent_email(request):
             cd = form.cleaned_data
             body = cd['text']
             subject = cd['subject']
-            email = EmailMessage(subject, body, request.user.email, ['ssm018.dzmitryi@gmail.com'])
-            # email = EmailMessage(subject, body, 'foo@sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org', ["bob@gmail.com"])
+            email = EmailMessage(subject, body, request.user.email, [cd['to_email']])
             email.send()
             sent = True
     else:
