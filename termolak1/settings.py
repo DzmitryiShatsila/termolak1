@@ -128,10 +128,13 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-# MAILGUN_ACCESS_KEY = '3e51f8d2-0de22ca2'
-# MAILGUN_SERVER_NAME = 'sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org'
+EMAIL_HOST_PASSWORD = '0a124790b7f43febe58847e046194d0f-3e51f8d2-03ef1e78'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 LOGIN_REDIRECT_URL = '/'
