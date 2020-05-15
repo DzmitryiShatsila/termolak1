@@ -10,11 +10,6 @@ from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
-import requests
-import smtplib
-from email.mime.text import MIMEText
-
-
 
 # Create your views here.
 
@@ -55,24 +50,6 @@ class CaseDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'report/case_delete.html'
     slug_field = 'id'
     success_url = reverse_lazy('report:all-cases')
-
-
-# @login_required()
-# def sent_email(request):
-#     if request.method == "POST":
-#         msg = MIMEText('Testing some Mailgun awesomness')
-#         msg['Subject'] = "Hello"
-#         msg['From'] = "foo@sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org"
-#         msg['To'] = "bob@gmail.com"
-#         s = smtplib.SMTP('smtp.mailgun.org', 587)
-#         s.login('postmaster@sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org', '0a124790b7f43febe58847e046194d0f-3e51f8d2-03ef1e78')
-#         s.sendmail(msg['From'], msg['To'], msg.as_string())
-#         s.quit()
-#     else:
-#         form = forms.EmailMForm()
-#     return render(request,
-#                   'report/sent_email.html',
-#                   {'form': form,})
 
 
 @login_required()

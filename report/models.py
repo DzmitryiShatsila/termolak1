@@ -49,5 +49,3 @@ class Cases(models.Model):
         return Cases.objects.filter(images=images).filter(case=case).filter(
             product=product).filter(software=software).filter(
             procedure=procedure)
-
-
