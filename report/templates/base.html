@@ -55,7 +55,7 @@
                     {% endif %}
                     <br>
                     {% if user.is_superuser %}
-                    <li><a href="{% url 'report:task' %}">TASKS</a></li>
+                    <li><a target="_blank" href="https://docs.google.com/spreadsheets/d/1d4gSSWkWneaQ_rkPW0zwX8jI1VfGUvFkaNdX_AB3Gs8/edit?ts=5d78ed16#gid=0">Tasks</a></li>
                     <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>
 
                     {% endif %}
@@ -68,33 +68,6 @@
             </div>
         </div>
     </div>
-
-
-<!--   {% block pagination %}-->
-<!--    <nav aria-label="Page navigation example">-->
-<!--        <ul class="pagination justify-content-center">-->
-<!--            {% if page_obj.has_previous %}-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="?page=1">&laquo;</a>-->
-<!--            </li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>-->
-<!--            </li >-->
-<!--            {% endif %}-->
-<!--            <li class="page-item">-->
-<!--                <p class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>-->
-<!--            </li>-->
-<!--            {% if page_obj.has_next %}-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>-->
-<!--            </li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>-->
-<!--            </li>-->
-<!--            {% endif %}-->
-<!--        </ul>-->
-<!--    </nav>-->
-<!--    {% endblock %}-->
 
 </body>
 </html>
