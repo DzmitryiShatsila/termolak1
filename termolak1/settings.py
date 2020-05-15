@@ -128,10 +128,10 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = '0c3f745014cd6d362ac8af133916042b-3e51f8d2-0de22ca2'
-MAILGUN_SERVER_NAME = 'sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+# MAILGUN_ACCESS_KEY = '3e51f8d2-0de22ca2'
+# MAILGUN_SERVER_NAME = 'sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org'
 
 
 LOGIN_REDIRECT_URL = '/'

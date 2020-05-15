@@ -10,7 +10,7 @@ from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
-# import requests
+import requests
 
 
 
@@ -57,66 +57,69 @@ class CaseDelete(LoginRequiredMixin, generic.DeleteView):
 
 @login_required()
 def sent_email(request):
-    cases = Cases.objects.filter(date=timezone.now()).filter(
-        author=request.user)
-    ct_knee = Cases.get_detail('ct', 's', 'knee', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_knee_avizo = Cases.get_detail('ct', 's', 'knee', 'avizo', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_hip = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_shoulder = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
-                                   'rec').filter(date=timezone.now()).filter(
-        author=request.user)
-    ct_spine = Cases.get_detail(r'ct', 's', 'spine', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    mri_knee = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_knee_check = Cases.get_detail('ct', 's', 'knee', 'mimics',
-                                     'check').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_hip_check = Cases.get_detail('ct', 's', 'hip', 'mimics', 'check').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_shoulder_check = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
-                                         'check').filter(
-        date=timezone.now()).filter(author=request.user)
-    osteotomy = cases.filter(case='o')
-    sent = False
-    if request.method == "POST":
-        form = forms.EmailMForm(request.POST)
+    return requests.post(
+        "https://api.mailgun.net/v3/sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org/messages",
+        auth=("api", "0c3f745014cd6d362ac8af133916042b-3e51f8d2-0de22ca2"),
+        data={"from": "Excited User <mailgun@andboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org>",
+              "to": ["bar@example.com", "andboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org"],
+              "subject": "Hello",
+              "text": "Testing some Mailgun awesomness!"})
 
-        if form.is_valid():
-            cd = form.cleaned_data
-            body = cd['text']
-            subject = cd['subject']
-            # email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
-            email = EmailMessage(subject, body, request.user.email, ['rosas30398@beiop.com'])
-            email.send()
-            # return requests.post(
-            #     "https://api.mailgun.net/v3/sandboxd8899fbc202f43ab94b96befef7a0e8d.mailgun.org/messages",
-            #     auth=("api", "0c3f745014cd6d362ac8af133916042b-3e51f8d2-0de22ca2"),
-            #     data={"from": "Excited User <mailgun@YOUR_DOMAIN_NAME>",
-            #           "to": ["rosas30398@beiop.com", "YOU@YOUR_DOMAIN_NAME"],
-            #           "subject": "Hello",
-            #           "text": "Testing some Mailgun awesomness!"})
-            sent = True
-    else:
-        form = forms.EmailMForm()
-    return render(request,
-                  'report/sent_email.html',
-                  {'cases': cases,
-                   'ct_knee': ct_knee,
-                   'ct_knee_avizo': ct_knee_avizo,
-                   'ct_hip': ct_hip,
-                   'ct_shoulder': ct_shoulder,
-                   'ct_spine': ct_spine,
-                   'mri_knee': mri_knee,
-                   'ct_knee_check': ct_knee_check,
-                   'ct_hip_check': ct_hip_check,
-                   'ct_shoulder_check': ct_shoulder_check,
-                   'osteotomy': osteotomy,
-                   'form': form,
-                   'sent': sent})
+# @login_required()
+# def sent_email(request):
+#     cases = Cases.objects.filter(date=timezone.now()).filter(
+#         author=request.user)
+#     ct_knee = Cases.get_detail('ct', 's', 'knee', 'mimics', 'rec').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_knee_avizo = Cases.get_detail('ct', 's', 'knee', 'avizo', 'rec').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_hip = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_shoulder = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
+#                                    'rec').filter(date=timezone.now()).filter(
+#         author=request.user)
+#     ct_spine = Cases.get_detail(r'ct', 's', 'spine', 'mimics', 'rec').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     mri_knee = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_knee_check = Cases.get_detail('ct', 's', 'knee', 'mimics',
+#                                      'check').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_hip_check = Cases.get_detail('ct', 's', 'hip', 'mimics', 'check').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     ct_shoulder_check = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
+#                                          'check').filter(
+#         date=timezone.now()).filter(author=request.user)
+#     osteotomy = cases.filter(case='o')
+#     sent = False
+#     if request.method == "POST":
+#         form = forms.EmailMForm(request.POST)
+#
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             body = cd['text']
+#             subject = cd['subject']
+#             email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+#             email = EmailMessage(subject, body, request.user.email, ['rosas30398@beiop.com'])
+#             email.send()
+#             sent = True
+#     else:
+#         form = forms.EmailMForm()
+#     return render(request,
+#                   'report/sent_email.html',
+#                   {'cases': cases,
+#                    'ct_knee': ct_knee,
+#                    'ct_knee_avizo': ct_knee_avizo,
+#                    'ct_hip': ct_hip,
+#                    'ct_shoulder': ct_shoulder,
+#                    'ct_spine': ct_spine,
+#                    'mri_knee': mri_knee,
+#                    'ct_knee_check': ct_knee_check,
+#                    'ct_hip_check': ct_hip_check,
+#                    'ct_shoulder_check': ct_shoulder_check,
+#                    'osteotomy': osteotomy,
+#                    'form': form,
+#                    'sent': sent})
 
 
 class SearchResultsView(LoginRequiredMixin, generic.ListView):
