@@ -11,7 +11,6 @@ from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
 
-
 # Create your views here.
 
 
@@ -87,7 +86,7 @@ def sent_email(request):
             cd = form.cleaned_data
             body = cd['text']
             subject = cd['subject']
-            email = EmailMessage(subject, body, request.user.email, ['root@google.com'])
+            email = EmailMessage(subject, body, request.user.email, [cd['to_email']])
             email.send()
             sent = True
     else:
