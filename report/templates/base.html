@@ -55,7 +55,7 @@
                     {% endif %}
                     <br>
                     {% if user.is_superuser %}
-                    <li><a target="_blank" href="https://docs.google.com/spreadsheets/d/1d4gSSWkWneaQ_rkPW0zwX8jI1VfGUvFkaNdX_AB3Gs8/edit?ts=5d78ed16#gid=0">Tasks</a></li>
+                    <li><a href="{% url 'tasks:all-tasks' %}">Tasks</a></li>
                     <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>
 
                     {% endif %}

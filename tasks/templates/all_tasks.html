@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--    <p>Rec:</p>-->
+
+
+    <table class="table table-bordered">
+        <tr>
+            <td>Casecode</td>
+            <td>Deadline</td>
+            <td>Author</td>
+        </tr>
+
+        <tr>
+            <form action="" method="post">
+                {% csrf_token %}
+                <td>{{ form.casecode }}</td>
+                <td>{{ form.deadline }}</td>
+                <td>{{ form.author }}</td>
+                <td>
+                    <input type="submit" value="Add">
+                </td>
+            </form>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            {% if task.status == 'r' %}
+            <td><a href="{% url 'tasks:task-update' task.id %}">{{task.casecode}}</a></td>
+            <td>{{task.deadline}}</td>
+            <td>{% if task.author %}{{ task.author }}{% else %}----{% endif %}</td>
+            <td><a href="{% url 'tasks:done' task.id %}">Done</a></td>
+            <td><a href="{% url 'tasks:task-delete' task.id %}">X</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+        <tr><td>Done:</td></tr>
+
+        {% for task in tasks %}
+            <tr>
+                {% if task.status == 'd' %}
+                <td><s>{{task.casecode}}</s></td>
+                <td>{{task.deadline}}</td>
+                <td>{% if task.author %}{{ task.author }}{% else %}----{% endif %}</td>
+                <td><a href="{% url 'tasks:move-back' task.id %}">Move back</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -14,10 +14,6 @@ from .filters import CasesFilter
 # Create your views here.
 
 
-class TasksView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'report/tasks.html'
-
-
 class MyCases(LoginRequiredMixin, generic.CreateView, generic.list.MultipleObjectMixin):
     form_class = forms.CasesForm
     success_url = '/'
