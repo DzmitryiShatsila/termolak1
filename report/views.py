@@ -52,29 +52,24 @@ class CaseDelete(LoginRequiredMixin, generic.DeleteView):
 
 @login_required()
 def sent_email(request):
-    cases = Cases.objects.filter(date=timezone.now()).filter(
+    cases = Cases.objects.filter(date=timezone.now()).filter(author=request.user)
+    ct_knee = Cases.get_detail('ct', 's', 'knee', 'mimics', 'rec').filter(date=timezone.now()).filter(
         author=request.user)
-    ct_knee = Cases.get_detail('ct', 's', 'knee', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_knee_avizo = Cases.get_detail('ct', 's', 'knee', 'avizo', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_hip = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_shoulder = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
-                                   'rec').filter(date=timezone.now()).filter(
+    ct_knee_avizo = Cases.get_detail('ct', 's', 'knee', 'avizo', 'rec').filter(date=timezone.now()).filter(
         author=request.user)
-    ct_spine = Cases.get_detail(r'ct', 's', 'spine', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    mri_knee = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_knee_check = Cases.get_detail('ct', 's', 'knee', 'mimics',
-                                     'check').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_hip_check = Cases.get_detail('ct', 's', 'hip', 'mimics', 'check').filter(
-        date=timezone.now()).filter(author=request.user)
-    ct_shoulder_check = Cases.get_detail('ct', 's', 'shoulder', 'mimics',
-                                         'check').filter(
-        date=timezone.now()).filter(author=request.user)
+    ct_hip = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(date=timezone.now()).filter(author=request.user)
+    ct_shoulder = Cases.get_detail('ct', 's', 'shoulder', 'mimics', 'rec').filter(date=timezone.now()).filter(
+        author=request.user)
+    ct_spine = Cases.get_detail(r'ct', 's', 'spine', 'mimics', 'rec').filter(date=timezone.now()).filter(
+        author=request.user)
+    mri_knee = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(date=timezone.now()).filter(
+        author=request.user)
+    ct_knee_check = Cases.get_detail('ct', 's', 'knee', 'mimics', 'check').filter(date=timezone.now()).filter(
+        author=request.user)
+    ct_hip_check = Cases.get_detail('ct', 's', 'hip', 'mimics', 'check').filter(date=timezone.now()).filter(
+        author=request.user)
+    ct_shoulder_check = Cases.get_detail('ct', 's', 'shoulder', 'mimics', 'check').filter(date=timezone.now()).filter(
+        author=request.user)
     osteotomy = cases.filter(case='o')
     sent = False
     if request.method == "POST":

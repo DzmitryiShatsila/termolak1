@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div style="padding-left: 20%">
+    <div style="padding: 15px 50px; width: 700px; margin: 1% 15%" class="border border-dark rounded">
         {% if sent %}
-            <h2>Report was successfully send via email.</h2>
+            <h4 style="text-align: center">Report was successfully send via email!</h4>
         {% else %}
-            <h1>Today's report</h1>
-
+            <h3 style="text-align: center">Today's report:</h3>
+            <div class="border rounded bg-white" style="margin: 15px 0; padding: 10px 10px 0">
             {% if cases %}
                 <p>Reconstruction: {% if ct_knee %}{{ ct_knee.count }} ct-knee(mimics),{% endif %}
                                     {% if ct_hip %}{{ ct_hip.count }} ct-hip(mimics),{% endif %}
@@ -23,11 +23,28 @@
             {% else %}
             You didn't made any cases today :(
             {% endif %}
-            <form action="." method="post">
-                {{ form.as_p }}
+            </div>
+            <form action="." method="post" id="email_form">
                 {% csrf_token %}
-                <input class="btn btn-primary" type="submit" value="Send">
             </form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">To email: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" form="email_form" {{form.to_email}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Subject: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" form="email_form" {{form.subject}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <textarea class="form-control" rows="7" form="email_form" placeholder="Enter text" {{form.text}}
+                </div>
+            </div>
+            <input class="btn btn-dark" style="margin: 15px 240px; width: 100px" form="email_form" type="submit" value="Send">
         {% endif %}
     </div>
 {% endblock %}

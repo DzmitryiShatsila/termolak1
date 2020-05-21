@@ -25,7 +25,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-# DEBUG = os.environ.get('DJANGO_DEBUG', True)
 
 ALLOWED_HOSTS = ['termolak1.herokuapp.com', '127.0.0.1']
 
@@ -35,6 +34,7 @@ ALLOWED_HOSTS = ['termolak1.herokuapp.com', '127.0.0.1']
 INSTALLED_APPS = [
     'report.apps.ReportConfig',
     'employee.apps.EmployeeConfig',
+    'tasks.apps.TasksConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
