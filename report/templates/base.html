@@ -6,68 +6,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-
     {% block title %} <title>Termolak1</title> {% endblock %}
 </head>
-<header>
-    {% if user.is_authenticated %}
-    <div>
-        <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
-                <a class="nav-link active border border-dark" href="{% url 'report:all-cases' %}">My cases</a>
-            </li>
-            <li class="nav-item">
-                <form class="nav-link active border border-dark" style="padding: 5px 0" action="{% url 'report:search-results' %}" method="get">
-                    <input name="q" placeholder="Search" type="text">
-                </form>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active border border-dark" href="{% url 'report:case-filter' %}">Filter</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active border border-dark" href="https://myknee.medacta.com/" target="_blank">Medacta.com</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active border border-dark" href="https://docs.google.com/spreadsheets/d/1KSSCoOfDqnUT5T825Ud1rVrEKgcGk0BV775E6elHYYU/edit#gid=0" target="_blank">Schedule</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active border border-dark" href="{% url 'report:sent-report' %}">Send email</a>
-            </li>
-
-            <li class="nav-item">
-                    <a class="nav-link active border border-dark" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
-            </li>
-            </ul>
-    </div>
-    {% endif %}
-</header>
 <body class="bg-light">
-    <div class="container-flex" style="margin:20px 15px 20px 0;">
-        <div class="row">
-            <div class="col-sm-2" >
-                {% block sidebar %}
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li>User: {{user.get_username}}</li>
-                        <li><a href="{% url 'employee:profile-view' %}">Profile</a></li>
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0">
+        <h1 class="navbar-brand col-sm-3 col-md-2 mr-0">Termolak1</h1>
+        <form action="{% url 'report:search-results' %}" method="get" id="search">
+        </form>
+        <input class="form-control form-control-dark w-100" form="search" name="q" placeholder="Search" type="search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'employee:profile-view' %}">{{user.get_username}}</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+            </li>
+        </ul>
+    </nav>
 
-                    {% endif %}
-                    <br>
-                    {% if user.is_superuser %}
-                    <li><a href="{% url 'tasks:all-tasks' %}">Tasks</a></li>
-                    <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 15px;">
+            <nav class="col-sm-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'report:all-cases' %}">
+                                <svg class="bi bi-house" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 00.5.5h9a.5.5 0 00.5-.5V7h1v6.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 13.5zm11-11V6l-2-2V2.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5z" clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 011.414 0l6.647 6.646a.5.5 0 01-.708.708L8 2.207 1.354 8.854a.5.5 0 11-.708-.708L7.293 1.5z" clip-rule="evenodd"/>
+                                </svg>
+                                My cases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'report:case-filter' %}">
+                                <svg class="bi bi-funnel" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 012 1h12a.5.5 0 01.5.5v2a.5.5 0 01-.128.334L10 8.692V13.5a.5.5 0 01-.342.474l-3 1A.5.5 0 016 14.5V8.692L1.628 3.834A.5.5 0 011.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 017 8.5v5.306l2-.666V8.5a.5.5 0 01.128-.334L13.5 3.308V2h-11z" clip-rule="evenodd"/>
+                                </svg>
+                                Filter
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'report:sent-report' %}">
+                                <svg class="bi bi-envelope" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M14 3H2a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1zM2 2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H2z" clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd" d="M.071 4.243a.5.5 0 01.686-.172L8 8.417l7.243-4.346a.5.5 0 01.514.858L8 9.583.243 4.93a.5.5 0 01-.172-.686z" clip-rule="evenodd"/>
+                                  <path d="M6.752 8.932l.432-.252-.504-.864-.432.252.504.864zm-6 3.5l6-3.5-.504-.864-6 3.5.504.864zm8.496-3.5l-.432-.252.504-.864.432.252-.504.864zm6 3.5l-6-3.5.504-.864 6 3.5-.504.864z"/>
+                                </svg>
+                                Send email
+                            </a>
+                        </li>
+                        {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'tasks:all-tasks' %}">
+                                <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M2 2.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5V3a.5.5 0 00-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                  <path d="M5 3.5a.5.5 0 01.5-.5h9a.5.5 0 010 1h-9a.5.5 0 01-.5-.5zM5.5 7a.5.5 0 000 1h9a.5.5 0 000-1h-9zm0 4a.5.5 0 000 1h9a.5.5 0 000-1h-9z"/>
+                                  <path fill-rule="evenodd" d="M1.5 7a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5H2a.5.5 0 01-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Tasks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'employee:all-employees' %}">
+                                <svg class="bi bi-people" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 00.014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 00.022.004zm7.973.056v-.002.002zM11 7a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0zM6.936 9.28a5.88 5.88 0 00-1.23-.247A7.35 7.35 0 005 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 015 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 116 0 3 3 0 01-6 0zm3-2a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"/>
+                                </svg>
+                                All employees
+                            </a>
+                        </li>
+                        {% endif %}
 
-                    {% endif %}
-                </ul>
-                {% endblock %}
-            </div>
-            <div class="col-sm-10">
+                        <li class="nav-item">
+                            <hr>
+                            <a class="nav-link text-dark" href="https://myknee.medacta.com/" target="_blank">
+                                <svg class="bi bi-building" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M15.285.089A.5.5 0 0115.5.5v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V14h-1v1.5a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V3.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM7.5 3.846V8.5a.5.5 0 01-.418.493l-5.582.93V15h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V15h2V1.222l-7 2.624z" clip-rule="evenodd"/>
+                                  <path fill-rule="evenodd" d="M6.5 15.5v-7h1v7h-1z" clip-rule="evenodd"/>
+                                  <path d="M2.5 11h1v1h-1v-1zm2 0h1v1h-1v-1zm-2 2h1v1h-1v-1zm2 0h1v1h-1v-1zm6-10h1v1h-1V3zm2 0h1v1h-1V3zm-4 2h1v1h-1V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm-2 2h1v1h-1V7zm2 0h1v1h-1V7zm-4 0h1v1h-1V7zm0 2h1v1h-1V9zm2 0h1v1h-1V9zm2 0h1v1h-1V9zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1z"/>
+                                </svg>
+                                Medacta
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="https://docs.google.com/spreadsheets/d/1KSSCoOfDqnUT5T825Ud1rVrEKgcGk0BV775E6elHYYU/edit#gid=0" target="_blank">
+                                <svg class="bi bi-grid-3x2" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 011.5 2h13A1.5 1.5 0 0116 3.5v8a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 010 11.5v-8zM1.5 3a.5.5 0 00-.5.5V7h4V3H1.5zM5 8H1v3.5a.5.5 0 00.5.5H5V8zm1 0h4v4H6V8zm4-1H6V3h4v4zm1 1v4h3.5a.5.5 0 00.5-.5V8h-4zm0-1V3h3.5a.5.5 0 01.5.5V7h-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Timetable
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+{% endif %}
+            <main class="col-sm-9">
                 {% block content %}
                 {% endblock %}
-            </div>
+            </main>
         </div>
     </div>
 
 </body>
 </html>
+
+
+
+
+<!--    <div class="container-flex" style="margin:20px 15px 20px 0;">-->
+<!--        <div class="row">-->
+<!--            <div class="col-sm-2" >-->
+<!--                {% block sidebar %}-->
+<!--                <ul>-->
+<!--                    {% if user.is_authenticated %}-->
+<!--                        <li>User: {{user.get_username}}</li>-->
+<!--                        <li><a href="{% url 'employee:profile-view' %}">Profile</a></li>-->
+
+<!--                    {% endif %}-->
+<!--                    <br>-->
+<!--                    {% if user.is_superuser %}-->
+<!--                    <li><a href="{% url 'tasks:all-tasks' %}">Tasks</a></li>-->
+<!--                    <li><a href="{% url 'employee:all-employees' %}">All employees</a></li>-->
+
+<!--                    {% endif %}-->
+<!--                </ul>-->
+<!--                {% endblock %}-->
+<!--            </div>-->
+<!--            <div class="col-sm-10">-->
+<!--                {% block content1 %}-->
+<!--                {% endblock %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+

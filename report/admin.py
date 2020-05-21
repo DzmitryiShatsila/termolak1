@@ -16,5 +16,5 @@ class CasesAdmin(admin.ModelAdmin):
 
 @admin.register(Tasks)
 class TasksAdmin(admin.ModelAdmin):
-    list_display = ('casecode', 'author', 'deadline', 'status', 'id')
+    list_display = ('casecode', 'author', 'deadline_time', 'deadline_date', 'status', 'id')
 

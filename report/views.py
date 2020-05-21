@@ -38,6 +38,7 @@ class CaseUpdate(LoginRequiredMixin, generic.UpdateView):
     fields = ('date', 'case_code', 'images', 'case', 'product', 'software', 'procedure', 'time',)
     template_name = 'report/case_update.html'
     success_url = reverse_lazy('report:all-cases')
+    context_object_name = 'case'
     slug_field = 'id'
 
 
@@ -46,6 +47,7 @@ class CaseDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'report/case_delete.html'
     slug_field = 'id'
     success_url = reverse_lazy('report:all-cases')
+    context_object_name = 'case'
 
 
 @login_required()
@@ -120,7 +122,8 @@ class SearchResultsView(LoginRequiredMixin, generic.ListView):
 class FilterCasesView(LoginRequiredMixin, generic.ListView):
     model = Cases
     template_name = 'report/case_filter.html'
-    context_object_name = 'filtered_cases'
+    context_object_name = 'filter.qs'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Cases.objects.filter(author=self.request.user)

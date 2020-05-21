@@ -8,7 +8,6 @@ class CasesForm(forms.ModelForm):
         model = models.Cases
         fields = ('date', 'case_code', 'images', 'case', 'product', 'software',
                   'procedure', 'time', 'notes',)
-        widgets = {'date': forms.SelectDateWidget}
 
 
 class EmailMForm(forms.Form):

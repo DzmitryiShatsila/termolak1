@@ -2,12 +2,14 @@
 {% block title %} <title>Delete case</title> {% endblock %}
 
 {% block content %}
-    <h1>Delete case</h1>
+<div class="border border-dark rounded bg-white" style="text-align: center; width: 400px; padding: 15px; margin: 15% 30%">
+    <h3>Delete case</h3>
     <p>Are you sure you want to delete {{case.case_code}}?</p>
-    <form action="." method="post">
-        {{ form.as_p }}
+    <form action="." method="post" id="delete">
         {% csrf_token %}
-        <input type="submit" value="Yes">
     </form>
-    <a href="{% url 'report:all-cases' %}">Cancel</a>
+    <input class="btn btn-dark" style="margin-right: 30px; width: 73px" form="delete" type="submit" value="Yes">
+    <a class="btn btn-dark" href="{% url 'report:all-cases' %}">Cancel</a>
+</div>
+
 {% endblock %}

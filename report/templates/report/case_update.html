@@ -2,10 +2,70 @@
 {% block title %} <title>Update case</title> {% endblock %}
 
 {% block content %}
-    <h1>Update {{case.case_code}}</h1>
-    <form action="." method="post">
-        {{ form.as_p }}
+<div class="border border-dark rounded bg-white" style="width: 500px; padding: 15px; margin: 3% 25%">
+    <h4 style="text-align: center">Update {{case.case_code}}</h4>
+    <form action="." method="post" id="update">
         {% csrf_token %}
-        <input type="submit" value="Save">
     </form>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Date: </label>
+        <div class="col-sm-10">
+            <input class="form-control" form="update" type="date" {{form.date}}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Casecode: </label>
+        <div class="col-sm-10">
+            <input class="form-control" form="update" id="update_date" {{ form.case_code }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Images: </label>
+        <div class="col-sm-10">
+            <select class="form-control" form="update" {{ form.images }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Case: </label>
+        <div class="col-sm-10">
+            <select class="form-control" form="update" {{ form.case }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Product: </label>
+        <div class="col-sm-10">
+            <select class="form-control" form="update" {{ form.product }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Software: </label>
+        <div class="col-sm-10">
+            <select class="form-control" form="update" {{ form.software }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Procedure: </label>
+        <div class="col-sm-10">
+            <select class="form-control" form="update" {{ form.procedure }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Time: </label>
+        <div class="col-sm-10">
+            <input class="form-control" form="update" {{ form.time }}
+        </div>
+    </div>
+
+    <input class="btn btn-dark" style="margin-left: 185px; width: 100px" form="update" type="submit" value="Save">
+
+
+
+</div>
 {% endblock %}

@@ -4,48 +4,127 @@
 {% block title %} <title>Filters</title> {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-9 border border-primary rounded" style="padding-left: 0">
-        {% if filter.qs %}
-        <table class="table table-bordered">
-            <thead>
-                <th scope="col">Date</th>
-                <th scope="col">Casecode</th>
-                <th scope="col">Images</th>
-                <th scope="col">Case</th>
-                <th scope="col">Product</th>
-                <th scope="col">Software</th>
-                <th scope="col">Procedure</th>
-                <th scope="col">Time</th>
-            </thead>
-            <tbody>
-                {% for case in filter.qs %}
-                    <tr>
-                        <td>{{ case.date }}</td>
-                        <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
-                        <td>{{ case.get_images_display }}</td>
-                        <td>{{ case.get_case_display }}</td>
-                        <td>{{ case.get_product_display }}</td>
-                        <td>{{ case.get_software_display }}</td>
-                        <td>{{ case.get_procedure_display }}</td>
-                        <td>{{ case.time }}</td>
-                        <td><a href="{% url 'report:case-delete' case.id %}">del</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-            There are no cases
-        {% endif %}
-    </div>
+<form action="" method="get" id="filter">
+    {% csrf_token %}
+</form>
+{% if filter.qs %}
+    <table class="table table-bordered">
+        <tr>
+            <td style="padding: 0">
+                <input class="form-control" form="filter" name="date" type="date" {{form.date}}
+            </td>
+            <td class="form-control" style="padding: 6; text-align: center">Casecode</td>
+            <td style="padding: 0;">
+                <select style="padding: 6px;" class="form-control" form="filter" name="images">
+                    <option value="" selected="">----</option>
+                    <option value="ct" selected="">CT</option>
+                    <option value="mri">MRI</option>
+                </select>
+            </td>
+            <td style="padding: 0">
+                <select style="padding: 6px" class="form-control" form="filter" name="case">
+                    <option value="" selected="">---------</option>
+                    <option value="s" selected="">Standard</option>
+                    <option value="o">MyOsteotomy</option>
+                </select>
+            </td>
+            <td style="padding: 0">
+                <select style="padding: 6px; min-width: 100px" class="form-control" form="filter" name="product">
+                    <option value="" selected="">---------</option>
+                    <option value="spine">Spine</option>
+                    <option value="knee">Knee</option>
+                    <option value="hip">Hip</option>
+                    <option value="shoulder">Shoulder</option>
+                    <option value="forearm">Forearm</option>
+                    <option value="wrist">Wrist</option>
+                    <option value="ankle">Ankle</option>
+                </select>
+            </td>
+            <td style="padding: 0">
+                <select style="padding: 6px" class="form-control" form="filter" name="software">
+                    <option value="" selected="">---------</option>
+                    <option value="mimics">Mimics</option>
+                    <option value="avizo">Avizo</option>
+                </select>
+            </td>
+            <td style="padding: 0">
+                <select style="padding: 6px; width: 140px" class="form-control" form="filter" name="procedure">
+                    <option value="" selected="">---------</option>
+                    <option value="rec">Reconstruction</option>
+                    <option value="check">Control</option>
+                </select>
+            </td>
+            <td class="form-control" style="padding: 6; text-align: center; width: 75px;">
+                Time
+            </td>
+            <td style="padding: 0">
+                <input form="filter" class="btn btn-dark" type="submit" value="Filter">
+            </td>
+        </tr>
+        {% for case in filter.qs %}
+        <tr>
+            <td>{{ case.date }}</td>
+            <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
+            <td>{{ case.get_images_display }}</td>
+            <td>{{ case.get_case_display }}</td>
+            <td>{{ case.get_product_display }}</td>
+            <td>{{ case.get_software_display }}</td>
+            <td>{{ case.get_procedure_display }}</td>
+            <td>{{ case.time }}</td>
+            <td><a class="text-dark" href="{% url 'report:case-delete' case.id %}">
+                <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+                </svg>
+            </a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    There are no cases
+{% endif %}
+<!--<div class="row">-->
+<!--    <div class="col-sm-9 border border-primary rounded" style="padding-left: 0">-->
+<!--        {% if filter.qs %}-->
+<!--        <table class="table table-bordered">-->
+<!--            <thead>-->
+<!--                <th scope="col">Date</th>-->
+<!--                <th scope="col">Casecode</th>-->
+<!--                <th scope="col">Images</th>-->
+<!--                <th scope="col">Case</th>-->
+<!--                <th scope="col">Product</th>-->
+<!--                <th scope="col">Software</th>-->
+<!--                <th scope="col">Procedure</th>-->
+<!--                <th scope="col">Time</th>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--                {% for case in filter.qs %}-->
+<!--                    <tr>-->
+<!--                        <td>{{ case.date }}</td>-->
+<!--                        <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>-->
+<!--                        <td>{{ case.get_images_display }}</td>-->
+<!--                        <td>{{ case.get_case_display }}</td>-->
+<!--                        <td>{{ case.get_product_display }}</td>-->
+<!--                        <td>{{ case.get_software_display }}</td>-->
+<!--                        <td>{{ case.get_procedure_display }}</td>-->
+<!--                        <td>{{ case.time }}</td>-->
+<!--                        <td><a href="{% url 'report:case-delete' case.id %}">del</a></td>-->
+<!--                    </tr>-->
+<!--                {% endfor %}-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        {% else %}-->
+<!--            There are no cases-->
+<!--        {% endif %}-->
+<!--    </div>-->
 
-    <div class="col-sm-3 border border-primary rounded" style="padding-top: 10px">
-        <form method="get">
-            {{ filter.form.as_p }}
-            <input class="btn btn-primary" type="submit" value="Filter">
-        </form>
-    </div>
-</div>
+<!--    <div class="col-sm-3 border border-primary rounded" style="padding-top: 10px">-->
+<!--        <form method="get">-->
+<!--            {{ filter.form.as_p }}-->
+<!--            <input class="btn btn-primary" type="submit" value="Filter">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 
