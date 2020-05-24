@@ -2,67 +2,124 @@
 
 {% block title %} <title>Detail</title> {% endblock %}
 {% block content %}
-    <div class="container-flex">
-        <div class="row">
-            <div class="col-sm-6">
-                <p>Name: {{ employee.get_full_name }}</p>
-                <p>Hired: {{ employee.profile.hired }}</p>
-                <p><a class="btn btn-primary" href="{% url 'employee:employee-delete' employee.username %}">Delete</a></p>
-            </div>
-            <div class="col-sm-6">
-                <p>Average time</p>
-                <ul>Reconstruction:
-                    <li>MyKnee: {{ ct_knee_rec }}</li>
-                    <li>MyKnee(MRI): {{ mri_knee_rec }}</li>
-                    <li>MyHip: {{ ct_hip_rec }}</li>
-                    <li>MyShoulder: {{ ct_shoulder_rec }}</li>
-                    <li>MySpine: {{ ct_spine_rec }}</li>
-                    <li>MyOsteo: {{ osteo }}</li>
-                </ul>
-                <ul>Check:
-                    <li>MyKnee: {{ ct_knee_check }}</li>
-                    <li>MyHip: {{ ct_hip_check }}</li>
-                    <li>MyShoulder: {{ ct_shoulder_check }}</li>
-                </ul>
-            </div>
+<div class="container border border-dark rounded bg-white" style="padding: 15px 30px; margin: 1% auto">
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Full name: {{ employee.get_full_name }}</p>
+            <p>Username: {{ employee.username }}</p>
+            <p>Email: {{ employee.email }}</p>
+            <p>Hired: {{ employee.profile.hired }}</p>
+            <a class="btn btn-dark" style="width: 100px" href="{% url 'employee:employee-delete' employee.username %}">Delete</a>
         </div>
-        <div class="row">
-            <p>Report:
-            {% if cases %}
-            <table class="table table-bordered">
-                <thead>
-                    <th scope="col">Author</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Casecode</th>
-                    <th scope="col">Images</th>
-                    <th scope="col">Case</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Software</th>
-                    <th scope="col">Procedure</th>
-                    <th scope="col">Time</th>
-<!--                <th scope="col">Notes</th>-->
-                </thead>
-                <tbody>
-                {% for case in cases %}
+        <div class="col-sm-6">
+            <table class="table table-sm table-bordered" style="text-align: center">
                 <tr>
-                    <td>{{ case.author.first_name }}</td>
-                    <td>{{ case.date }}</td>
-                    <td>{{ case.case_code }}</td>
-                    <td>{{ case.get_images_display }}</td>
-                    <td>{{ case.get_case_display }}</td>
-                    <td>{{ case.get_product_display }}</td>
-                    <td>{{ case.get_software_display }}</td>
-                    <td>{{ case.get_procedure_display }}</td>
-                    <td>{{ case.time }}</td>
-<!--             <td>{{ case.notes }}</td>-->
+                    <td rowspan="2"><strong>Average time</strong></td>
+                    <td colspan="2">Mimics</td>
+                    <td>Avizo</td>
                 </tr>
-                {% endfor %}
+                <tr>
+                    <td>Rec</td>
+                    <td>Check</td>
+                    <td>Rec</td>
+                </tr>
+                <tr>
+                    <td>MyKnee</td>
+                    <td>{{ ct_knee_rec|floatformat:0 }}</td>
+                    <td>{{ ct_knee_check|floatformat:0 }}</td>
+                    <td>{{ ct_knee_rec_avizo|floatformat:0 }}</td>
+                </tr>
+                <tr>
+                    <td>MyKnee(MRI)</td>
+                    <td>{{ mri_knee_rec|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyShoulder</td>
+                    <td>{{ ct_shoulder_rec|floatformat:0 }}</td>
+                    <td>{{ ct_shoulder_check|floatformat:0 }}</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MySpine</td>
+                    <td>{{ ct_spine_rec|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyHip</td>
+                    <td>{{ ct_hip_rec|floatformat:0 }}</td>
+                    <td>{{ ct_hip_check|floatformat:0 }}</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyOsteoKnee</td>
+                    <td>{{ osteo_knee|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyOsteoShoulder</td>
+                    <td>{{ osteo_shoulder|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyOsteoForearm</td>
+                    <td>{{ osteo_forearm|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyOsteoWrist</td>
+                    <td>{{ osteo_wrist|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                <tr>
+                    <td>MyOsteoAnkle</td>
+                    <td>{{ osteo_ankle|floatformat:0 }}</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
             </table>
-            {% else %}
-                There are no cases
-            {% endif %}
-            </p>
         </div>
     </div>
-
+</div>
+<div class="container border border-dark rounded bg-white" style="padding: 15px 30px; margin: 0 auto 30px">
+    <div style="text-align: center">
+        <p><strong>{{ employee.first_name }}'s report</strong></p>
+    </div>
+    <div class="row">
+        {% if cases %}
+    <table class="table table-bordered">
+        <tr style="text-align: center">
+            <td>Date</td>
+            <td>Casecode</td>
+            <td>Images</td>
+            <td>Case</td>
+            <td>Product</td>
+            <td>Software</td>
+            <td>Procedure</td>
+            <td>Time</td>
+        </tr>
+        {% for case in cases %}
+        <tr>
+            <td>{{ case.date }}</td>
+            <td>{{ case.case_code }}</td>
+            <td>{{ case.get_images_display }}</td>
+            <td>{{ case.get_case_display }}</td>
+            <td>{{ case.get_product_display }}</td>
+            <td>{{ case.get_software_display }}</td>
+            <td>{{ case.get_procedure_display }}</td>
+            <td>{{ case.time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        There are no cases
+    {% endif %}
+    </div>
+</div>
 {% endblock %}

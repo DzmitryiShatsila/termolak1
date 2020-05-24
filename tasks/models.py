@@ -8,7 +8,7 @@ class Tasks(models.Model):
     casecode = models.CharField(max_length=250)
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     deadline_date = models.DateField(default=timezone.now)
-    deadline_time = models.TimeField(default=timezone.now)
+    deadline_time = models.CharField(max_length=25)
     STATUS = (('r', 'rec'),
               ('d', 'done'))
     status = models.CharField(max_length=1, choices=STATUS, default='r')

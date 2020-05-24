@@ -10,6 +10,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    class Meta:
-        permissions = (("is_manager", "Can see all things"),)

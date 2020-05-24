@@ -1,10 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Rec:</p>
-    <form action="" method="post">
-        {{ form }}
-        {% csrf_token %}
-        <input type="submit" value="Save">
-    </form>
+<form action="" method="post" id="task_detail_form">
+    {% csrf_token %}
+</form>
+<div class="container border border-dark rounded bg-white" style="width: 500px; padding: 20px; margin: 5% auto">
+    <h4 style="text-align: center; margin-bottom: 30px">Update {{ task.casecode }}</h4>
+    <div class="row" style="margin-bottom: 20px">
+        <label class="col-sm-3 col-form-label"><strong>Casecode: </strong></label>
+        <div class="col-sm-9">
+            <input class="form-control" form="task_detail_form" placeholder="Casecode" required {{ form.casecode }}
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px">
+        <label class="col-sm-3 col-form-label"><strong>Deadline time: </strong></label>
+        <div class="col-sm-9">
+            <input class="form-control" form="task_detail_form" placeholder="Deadline time" required {{ form.deadline_time }}
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px">
+        <label class="col-sm-3 col-form-label"><strong>Deadline date: </strong></label>
+        <div class="col-sm-9">
+            <input class="form-control" form="task_detail_form" placeholder="Deadline date" type="date" required {{ form.deadline_date }}
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px">
+        <label class="col-sm-3 col-form-label"><strong>Author: </strong></label>
+        <div class="col-sm-9">
+            <select class="form-control" form="task_detail_form" {{ form.author }}
+        </div>
+    </div>
+    <div class="row">
+        <input class="btn btn-dark" form="task_detail_form" style="width: 152px; margin: 0 auto" type="submit" value="Save">
+    </div>
+</div>
+
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from .models import Profile
 from django import forms
+from django.utils import timezone
 
 
 class UserCreateForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class UserCreateForm(forms.ModelForm):
         fields = ('username', 'password', 'email', 'first_name', 'last_name')
         widgets = {'password': forms.PasswordInput}
 
-    hired = forms.DateField(widget=forms.SelectDateWidget)
+    hired = forms.DateField(initial=timezone.now())
 
     def clean(self):
         cd = super().clean()

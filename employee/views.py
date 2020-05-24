@@ -103,25 +103,37 @@ class EmployeeDetail(LoginRequiredMixin, PermissionRequiredMixin, generic.Detail
     template_name = 'employee_detail.html'
     context_object_name = 'employee'
 
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cases'] = Cases.objects.filter(author__username=context['employee'])[:30]
         context['ct_knee_rec'] = Cases.get_detail('ct', 's', 'knee', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
-        context['mri_knee_rec'] = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(
+        context['ct_knee_check'] = Cases.get_detail('ct', 's', 'knee', 'mimics', 'check').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
-        context['ct_hip_rec'] = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(
+        context['ct_knee_rec_avizo'] = Cases.get_detail('ct', 's', 'knee', 'avizo', 'rec').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['mri_knee_rec'] = Cases.get_detail('mri', 's', 'knee', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
         context['ct_shoulder_rec'] = Cases.get_detail('ct', 's', 'shoulder', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['ct_shoulder_check'] = Cases.get_detail('ct', 's', 'shoulder', 'mimics', 'check').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
         context['ct_spine_rec'] = Cases.get_detail('ct', 's', 'spine', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
-        context['osteo'] = Cases.get_detail('ct', 'o', '', 'mimics', 'rec').filter(
-            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
-        context['ct_knee_check'] = Cases.get_detail('ct', 's', 'knee', 'mimics', 'check').filter(
+        context['ct_hip_rec'] = Cases.get_detail('ct', 's', 'hip', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
         context['ct_hip_check'] = Cases.get_detail('ct', 's', 'hip', 'mimics', 'check').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
-        context['ct_shoulder_check'] = Cases.get_detail('ct', 's', 'shoulder', 'mimics', 'check').filter(
+        context['osteo_knee'] = Cases.get_detail('ct', 'o', 'knee', 'mimics', 'rec').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['osteo_shoulder'] = Cases.get_detail('ct', 'o', 'shoulder', 'mimics', 'rec').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['osteo_forearm'] = Cases.get_detail('ct', 'o', 'forearm', 'mimics', 'rec').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['osteo_wrist'] = Cases.get_detail('ct', 'o', 'wrist', 'mimics', 'rec').filter(
+            author__username=context['employee']).aggregate(Avg('time'))['time__avg']
+        context['osteo_ankle'] = Cases.get_detail('ct', 'o', 'ankle', 'mimics', 'rec').filter(
             author__username=context['employee']).aggregate(Avg('time'))['time__avg']
         return context

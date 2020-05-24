@@ -2,12 +2,31 @@
 
 {% block title %} <title>Profile {{ user.last_name }}</title> {% endblock %}
 {% block content %}
-    <p>{{ user.get_full_name }}</p>
-    <p>Name: {{ user.first_name }}</p>
-    <p>Surname: {{ user.last_name }}</p>
-    <p>Login: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-
-    <p><a href="{% url 'employee:profile-update' %}">Edit</a></p>
-    <p><a href="{% url 'employee:change-pass' %}">Change password</a></p>
+<div class="container border border-dark rounded bg-white" style="width: 500px; padding: 20px; margin: 5% auto">
+    <h4 style="text-align: center; margin-bottom: 30px">My Profile</h4>
+    <div class="row" style="margin: 0 auto 20px">
+        <div class="col-sm-4"><strong>Full name: </strong></div>
+        <div class="col-sm-8">{{ user.get_full_name }}</div>
+    </div>
+    <div class="row" style="margin: 0 auto 20px">
+        <div class="col-sm-4"><strong>Username: </strong></div>
+        <div class="col-sm-8">{{ user.username }}</div>
+    </div>
+    <div class="row" style="margin: 0 auto 20px">
+        <div class="col-sm-4"><strong>Email: </strong></div>
+        <div class="col-sm-8">{{ user.email }}</div>
+    </div>
+    <div class="row" style="margin: 0 auto 20px">
+        <div class="col-sm-4"><strong>Hired: </strong></div>
+        <div class="col-sm-8">{{ user.profile.hired }}</div>
+    </div>
+    <div class="row" style="margin-top: 30px; text-align: center">
+        <div class="col-sm-6">
+            <a class="btn btn-dark" style="width: 152px" href="{% url 'employee:profile-update' %}">Edit</a>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-dark" href="{% url 'employee:change-pass' %}">Change password</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

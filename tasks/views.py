@@ -49,7 +49,7 @@ class TaskUpdate(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView
     model = Tasks
     form_class = forms.TaskForm
     success_url = reverse_lazy('tasks:all-tasks')
-    context_object_name = 'form'
+    context_object_name = 'task'
     template_name = 'task_detail.html'
     slug_field = 'id'
 
@@ -57,6 +57,7 @@ class TaskUpdate(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView
 class TaskDelete(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView):
     permission_required = ''
     model = Tasks
+    context_object_name = 'task'
     success_url = reverse_lazy('tasks:all-tasks')
     slug_field = 'id'
     template_name = 'task_delete.html'

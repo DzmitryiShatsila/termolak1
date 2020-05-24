@@ -1,54 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-
-
-    <table class="table table-bordered">
-        <tr>
-            <td>Casecode</td>
-            <td>Deadline time</td>
-            <td>Deadline date</td>
-            <td>Author</td>
-        </tr>
-
-        <tr>
-            <form action="" method="post">
-                {% csrf_token %}
-                <td>{{ form.casecode }}</td>
-                <td><input type="time" name="deadline_time" required="" id="id_deadline_time"></td>
-                <td><input data type="date" name="deadline_date" required="" id="id_deadline_date"></td>
-                <td>{{ form.author }}</td>
-                <td>
-                    <input type="submit" value="Add">
+<form action="" method="post" id="task_create">
+    {% csrf_token %}
+</form>
+<div class="container border border-dark rounded bg-white" style="padding: 15px 30px; margin: 1% auto">
+    <div class="row">
+        {% if tasks %}
+        <table class="table">
+            <tr style="text-align: center">
+                <td>Casecode</td>
+                <td>Deadline time</td>
+                <td>Deadline date</td>
+                <td>Employee</td>
+            </tr>
+            <tr style="height: 40px; padding: 1px">
+                <td style="padding: 0">
+                    <input style="padding: 6px" class="form-control" form="task_create" type="text" placeholder="Casecode" required {{ form.casecode }}
                 </td>
-            </form>
-        </tr>
-        {% for task in tasks %}
-        <tr>
-            {% if task.status == 'r' %}
-            <td><a href="{% url 'tasks:task-update' task.id %}">{{task.casecode}}</a></td>
-            <td>{{task.deadline_time}}</td>
-            <td>{{task.deadline_date}}</td>
-            <td>{% if task.author %}{{ task.author }}{% else %}----{% endif %}</td>
-            <td><a href="{% url 'tasks:done' task.id %}">Done</a></td>
-            <td><a href="{% url 'tasks:task-delete' task.id %}">Delete</a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
+                <td style="padding: 0">
+                    <input class="form-control" form="task_create" type="text" {{ form.deadline_time }}
+                </td>
+                <td style="padding: 0">
+                    <input class="form-control" form="task_create" type="date" {{ form.deadline_date }}
+                </td>
+                <td style="padding: 0">
+                    <select style="padding: 6px" class="form-control" form="task_create" {{ form.author }}
+                </td>
+                <td style="padding: 0;">
+                    <input style="width: 64px" form="task_create" class="btn btn-dark" type="submit" value="Add">
+                </td>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                {% if task.status == 'r' %}
+                <td><a href="{% url 'tasks:task-update' task.id %}">{{task.casecode}}</a></td>
+                <td>{{ task.deadline_time }}</td>
+                <td>{{ task.deadline_date }}</td>
+                <td>{% if task.author %}{{ task.author }}{% else %}----{% endif %}</td>
+                <td style="padding: 0">
+                    <a class="btn btn-outline-dark" href="{% url 'tasks:done' task.id %}">Done</a>
+                </td>
+                <td style="padding: 0">
+                    <a class="btn btn-outline-dark text-dark" style="height: 38px; padding-top: 9px" href="{% url 'tasks:task-delete' task.id %}">
+                        <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        There are no tasks
+    {% endif %}
+    </div>
+</div>
 
-        <tr><td>Done:</td></tr>
-
-        {% for task in tasks %}
+<div class="container border border-dark rounded" style="padding: 15px 30px; margin: 1% auto">
+    <div style="text-align: center">
+        <h4>Done:</h4>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr style="text-align: center">
+                <td>Casecode</td>
+                <td>Deadline time</td>
+                <td>Deadline date</td>
+                <td>Employee</td>
+            </tr>
+            {% for task in tasks %}
             <tr>
                 {% if task.status == 'd' %}
                 <td><s>{{task.casecode}}</s></td>
-                <td>{{task.deadline_time}}</td>
-                <td>{{task.deadline_date}}</td>
+                <td>{{ task.deadline_time }}</td>
+                <td>{{ task.deadline_date }}</td>
                 <td>{% if task.author %}{{ task.author }}{% else %}----{% endif %}</td>
-                <td><a href="{% url 'tasks:move-back' task.id %}">Move back</a></td>
+                <td><a class="btn btn-outline-dark text-dark" href="{% url 'tasks:move-back' task.id %}">Move back</a></td>
                 {% endif %}
             </tr>
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock %}

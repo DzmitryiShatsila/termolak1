@@ -2,11 +2,22 @@
 
 {% block title %} <title>Delete employee</title> {% endblock %}
 {% block content %}
+<div class="container border border-dark rounded bg-white" style="width: 500px; padding: 20px; margin: 10% auto">
+    <div style="text-align: center; margin-bottom: 40px">
+        <h5>Are you sure you want to delete {{ employee.get_full_name }}?</h5>
+    </div>
+    <div class="row" style="text-align: center">
+        <div class="col">
+            <form action="" method="post">
+                {% csrf_token %}
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete {{ employee.get_full_name }}?</p>
-        <input class="btn btn-primary" type="submit" value="Yes, delete">
-    </form>
-    <a class="btn btn-primary" href="{% url 'employee:all-employees'%}">Cancel</a>
+                <input class="btn btn-dark" type="submit" value="Yes, delete">
+            </form>
+        </div>
+        <div class="col">
+            <a class="btn btn-dark" style="width: 100px" href="{% url 'employee:all-employees'%}">Cancel</a>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
