@@ -7,7 +7,7 @@ class CasesForm(forms.ModelForm):
     class Meta:
         model = models.Cases
         fields = ('date', 'case_code', 'images', 'case', 'product', 'software',
-                  'procedure', 'time', 'notes',)
+                  'procedure', 'time',)
 
 
 class EmailMForm(forms.Form):
