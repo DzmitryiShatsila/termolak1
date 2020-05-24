@@ -23,7 +23,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
                 ('date', models.DateField(default=django.utils.timezone.now)),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
                 ('case_code', models.CharField(max_length=200)),
                 ('images', models.CharField(choices=[('ct', 'CT'), ('mri', 'MRI')], default='ct', max_length=3)),
                 ('case', models.CharField(choices=[('s', 'Standard'), ('o', 'MyOsteotomy')], default='s', max_length=1)),
@@ -34,7 +33,7 @@ class Migration(migrations.Migration):
                 ('author', models.ForeignKey(default=django.contrib.auth.models.User, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'ordering': ['-date', '-created'],
+                'ordering': ['-date'],
             },
         ),
     ]

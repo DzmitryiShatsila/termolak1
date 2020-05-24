@@ -42,7 +42,7 @@ class Cases(models.Model):
     time = models.IntegerField(validators=[validate_time])
 
     class Meta:
-        ordering = ['-date', '-created']
+        ordering = ['-date', ]
 
     @staticmethod
     def get_detail(images, case, product, software, procedure):
