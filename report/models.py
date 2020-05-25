@@ -40,7 +40,6 @@ class Cases(models.Model):
                       ('check', 'Control'))
     procedure = models.CharField(max_length=10, choices=procedure_type)
     time = models.IntegerField(validators=[validate_time])
-    notes = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         ordering = ['-date', ]
