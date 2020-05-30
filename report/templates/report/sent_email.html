@@ -15,13 +15,13 @@
                                     {% if mri_knee %}{{ mri_knee.count }} mri-knee(mimics),{% endif %}
                                     {% if ct_knee_avizo %}{{ ct_knee_avizo.count }} ct-knee(avizo),{% endif %}
                 </p>
-                <p>Check: {% if ct_knee_check %}{{ ct_knee_check.count }} ct-knee(mimics), {% endif %}
-                    {% if ct_hip_check %}{{ ct_hip_check.count }} ct-hip(mimics), {% endif %}
-                    {% if ct_shoulder_check %}{{ ct_shoulder_check.count }} ct-shoulder(mimics),{% endif %}
+                <p>Check: {% if ct_knee_check %}{{ ct_knee_check.count }} ct-knee(mimics),{% endif %}
+                            {% if ct_hip_check %}{{ ct_hip_check.count }} ct-hip(mimics),{% endif %}
+                            {% if ct_shoulder_check %}{{ ct_shoulder_check.count }} ct-shoulder(mimics),{% endif %}
                 </p>
                  <p>Extra: {% if osteotomy %}{{ osteotomy.count }} osteotomy(mimics){% endif %}</p>
             {% else %}
-            You didn't made any cases today :(
+            You didn't make any cases today :(
             {% endif %}
             </div>
             <form action="." method="post" id="email_form">

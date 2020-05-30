@@ -61,7 +61,7 @@
                 <input form="filter" class="btn btn-dark" type="submit" value="Filter">
             </td>
         </tr>
-        {% for case in filter.qs %}
+        {% for case in object_list %}
         <tr>
             <td>{{ case.date }}</td>
             <td><a href="{% url 'report:case-update' case.id %}">{{ case.case_code }}</a></td>
@@ -80,6 +80,30 @@
         </tr>
         {% endfor %}
     </table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li >
+        {% endif %}
+        <li class="page-item">
+            <p class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
 {% else %}
     There are no cases
 {% endif %}

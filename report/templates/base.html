@@ -11,7 +11,7 @@
 <body class="bg-light">
     {% if user.is_authenticated %}
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0">
-        <h1 class="navbar-brand col-sm-3 col-md-2 mr-0">Termolak1</h1>
+        <h4 class="navbar-brand col-sm-3 col-md-2 mr-0 text-white" style="padding-bottom: 0">Termolak1</h4>
         <form action="{% url 'report:search-results' %}" method="get" id="search">
         </form>
         <input class="form-control form-control-dark w-100" form="search" name="q" placeholder="Search" type="search">

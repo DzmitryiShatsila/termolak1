@@ -10,6 +10,7 @@ from .models import Cases
 from . import forms
 from django.core.mail import EmailMessage
 from .filters import CasesFilter
+from django_filters.views import FilterView
 
 # Create your views here.
 
@@ -19,7 +20,7 @@ class MyCases(LoginRequiredMixin, generic.CreateView, generic.list.MultipleObjec
     success_url = '/'
     template_name = 'report/all_cases.html'
     context_object_name = 'form'
-    paginate_by = 15
+    paginate_by = 25
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -105,6 +106,7 @@ class SearchResultsView(LoginRequiredMixin, generic.ListView):
     model = Cases
     template_name = 'report/search_results.html'
     context_object_name = 'cases'
+    paginate_by = 25
 
     def get_queryset(self):
         query = ''
@@ -114,17 +116,11 @@ class SearchResultsView(LoginRequiredMixin, generic.ListView):
         return object_list
 
 
-class FilterCasesView(LoginRequiredMixin, generic.ListView):
-    model = Cases
+class FilterCasesView(LoginRequiredMixin, FilterView):
+    filterset_class = CasesFilter
     template_name = 'report/case_filter.html'
-    context_object_name = 'filter.qs'
-    paginate_by = 5
+    paginate_by = 25
 
     def get_queryset(self):
         queryset = Cases.objects.filter(author=self.request.user)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = CasesFilter(self.request.GET, queryset=self.get_queryset())
-        return context
