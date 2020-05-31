@@ -6,7 +6,6 @@
 </form>
 <div class="container border border-dark rounded bg-white" style="padding: 15px 30px; margin: 1% auto">
     <div class="row">
-        {% if tasks %}
         <table class="table">
             <tr style="text-align: center">
                 <td>Casecode</td>
@@ -53,9 +52,6 @@
             </tr>
             {% endfor %}
         </table>
-    {% else %}
-        There are no tasks
-    {% endif %}
     </div>
 </div>
 
